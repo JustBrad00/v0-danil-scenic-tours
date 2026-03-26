@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
@@ -7,6 +8,12 @@ import Footer from '@/components/footer'
 import FloatingButtons from '@/components/floating-buttons'
 import AccessibilityToolbar from '@/components/accessibility-toolbar'
 import { ArrowRight } from 'lucide-react'
+
+const heroSlideImages = [
+  '/images/impala-herd.webp',
+  '/images/leopard-cub.webp',
+  '/images/crowned-crane.webp',
+]
 
 const destinations = [
   {
@@ -72,24 +79,39 @@ const destinations = [
 ]
 
 export default function DestinationsPage() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroSlideImages.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <main className="min-h-screen bg-[#FAF4E8]">
       <Navbar />
       
-      {/* Hero */}
+      {/* Hero with Slideshow */}
       <section className="relative h-96 flex flex-col items-center justify-center pt-20">
-        <div
-          className="absolute inset-0 flex items-center justify-center text-center ken-burns-zoom"
-          style={{
-            backgroundColor: '#C4A882',
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '13px',
-            fontStyle: 'italic',
-            color: '#6B5240',
-            zIndex: 0,
-          }}
-        >
-          [Photo: Maasai Mara savannah at golden hour — wide open plains, acacia trees, warm light]
+        <div className="absolute inset-0 z-0">
+          {heroSlideImages.map((image, index) => (
+            <div
+              key={index}
+              className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+              style={{
+                opacity: index === currentImageIndex ? 1 : 0,
+              }}
+            >
+              <Image
+                src={image}
+                alt={`Kenya wonders slide ${index + 1}`}
+                fill
+                className="object-cover"
+                priority={index === 0}
+              />
+            </div>
+          ))}
         </div>
         <div
           className="absolute inset-0"
