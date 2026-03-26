@@ -8,6 +8,7 @@ import StorytellingSectionHome from '@/components/storytelling-section-home'
 import ServicesGrid from '@/components/services-grid'
 import FeaturedDestinations from '@/components/featured-destinations'
 import HowItWorks from '@/components/how-it-works'
+import ImageSlideshowSections from '@/components/image-slideshow-sections'
 import TestimonialsCarousel from '@/components/testimonials-carousel'
 import FinalCTABanner from '@/components/final-cta-banner'
 import Footer from '@/components/footer'
@@ -31,6 +32,7 @@ export default function Home() {
       <StorytellingSectionHome />
       <ServicesGrid />
       <FeaturedDestinations />
+      <ImageSlideshowSections />
       <HowItWorks />
       <TestimonialsCarousel />
       <FinalCTABanner />
