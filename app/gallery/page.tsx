@@ -14,7 +14,7 @@ const galleryImages = [
   { image: '[Photo: Tourists laughing and watching wildlife from open jeep roof]', isPlaceholder: true },
   { image: '[Photo: Diani Beach — white sand, turquoise Indian Ocean, palm trees]', isPlaceholder: true },
   { image: '[Photo: Hot air balloon at sunrise over Maasai Mara, golden mist below]', isPlaceholder: true },
-  { image: '/images/cultural-community-gathering.jpg', isPlaceholder: false },
+  { image: '/images/cultural-gathering.webp', isPlaceholder: false },
   { image: '[Photo: Leopard resting in tree, Tsavo National Park]', isPlaceholder: true },
   { image: '[Photo: Lake Bogoria hot springs and flamingo colony]', isPlaceholder: true },
   { image: '[Photo: Mt. Kenya highland peak — dramatic clouds, greenery]', isPlaceholder: true },

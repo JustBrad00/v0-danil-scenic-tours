@@ -23,7 +23,7 @@ const services = [
     tag: 'Cultural',
     description: 'Immerse yourself in Kenya\'s vibrant traditions and daily life. Meet local communities, learn their customs, and savour authentic cuisine — including Kalenjin mursik and Gikuyu githeri.',
     details: 'Available as: Private or Group',
-    image: '/images/cultural-community-gathering.jpg',
+    image: '/images/cultural-gathering.webp',
     isPlaceholder: false,
   },
   {

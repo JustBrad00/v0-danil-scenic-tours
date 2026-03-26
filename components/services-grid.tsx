@@ -14,7 +14,7 @@ const services = [
   {
     title: 'Cultural Expeditions',
     description: 'Live the traditions, taste the cuisine, meet the people.',
-    image: '/images/cultural-community-gathering.jpg',
+    image: '/images/cultural-gathering.webp',
     isPlaceholder: false,
   },
   {
