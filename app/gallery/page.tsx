@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
@@ -9,40 +10,61 @@ import AccessibilityToolbar from '@/components/accessibility-toolbar'
 const galleryImages = [
   { image: '/images/elephant-kilimanjaro.webp', isPlaceholder: false },
   { image: '/images/amboseli-elephants.webp', isPlaceholder: false },
-  { image: '[Photo: 4x4 pop-up roof safari jeep on open savannah game drive]', isPlaceholder: true },
-  { image: '[Photo: Flamingos in flight over Lake Nakuru, pink sky reflection]', isPlaceholder: true },
-  { image: '[Photo: Tourists laughing and watching wildlife from open jeep roof]', isPlaceholder: true },
+  { image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2816%29-okv68gOhxJpXw4n1wmi6LzVWsS5NI3.webp', isPlaceholder: false },
+  { image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2812%29-s02sGMy6RmxVwGRkXsuExT87bOTlVI.webp', isPlaceholder: false },
+  { image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2815%29-3ELJ3hQTT33H8nK1hqEBM53zsX5JEk.webp', isPlaceholder: false },
   { image: '/images/beach-diving.webp', isPlaceholder: false },
-  { image: '[Photo: Hot air balloon at sunrise over Maasai Mara, golden mist below]', isPlaceholder: true },
+  { image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp', isPlaceholder: false },
   { image: '/images/cultural-gathering.webp', isPlaceholder: false },
-  { image: '[Photo: Leopard resting in tree, Tsavo National Park]', isPlaceholder: true },
-  { image: '[Photo: Lake Bogoria hot springs and flamingo colony]', isPlaceholder: true },
-  { image: '[Photo: Mt. Kenya highland peak — dramatic clouds, greenery]', isPlaceholder: true },
+  { image: '/images/cheetah-resting.webp', isPlaceholder: false },
+  { image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2814%29-PPbHtHwWOiOCF897LhCVKG6lE946GY.webp', isPlaceholder: false },
   { image: '/images/zebras-savanna.webp', isPlaceholder: false },
-  { image: '[Photo: Family group on Kenya safari, smiling, binoculars out]', isPlaceholder: true },
+  { image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2813%29-dvsdfGxqdqYzb94D6e93B8K10dhmKW.webp', isPlaceholder: false },
   { image: '[Photo: Meru National Park remote wilderness at dusk]', isPlaceholder: true },
   { image: '[Photo: Aberdare National Park highland waterfalls and forest]', isPlaceholder: true },
 ]
 
+const heroSlideImages = [
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2812%29-s02sGMy6RmxVwGRkXsuExT87bOTlVI.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2813%29-dvsdfGxqdqYzb94D6e93B8K10dhmKW.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2814%29-PPbHtHwWOiOCF897LhCVKG6lE946GY.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2815%29-3ELJ3hQTT33H8nK1hqEBM53zsX5JEk.webp',
+]
+
 export default function GalleryPage() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroSlideImages.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <main className="min-h-screen bg-[#FAF4E8]">
       <Navbar />
       
       {/* Hero */}
-      <section className="relative h-96 flex flex-col items-center justify-center pt-20">
-        <div
-          className="absolute inset-0 flex items-center justify-center text-center ken-burns-zoom"
-          style={{
-            backgroundColor: '#C4A882',
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '13px',
-            fontStyle: 'italic',
-            color: '#6B5240',
-            zIndex: 0,
-          }}
-        >
-          [Photo: Maasai Mara savannah at golden hour — wide open plains, acacia trees, warm light]
+      <section className="relative h-screen flex flex-col items-center justify-center pt-20">
+        <div className="absolute inset-0 z-0">
+          {heroSlideImages.map((image, index) => (
+            <div
+              key={index}
+              className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+              style={{
+                opacity: index === currentImageIndex ? 1 : 0,
+              }}
+            >
+              <Image
+                src={image}
+                alt={`Kenya destinations slideshow ${index + 1}`}
+                fill
+                className="object-cover"
+                priority={index === 0}
+              />
+            </div>
+          ))}
         </div>
         <div
           className="absolute inset-0"
@@ -62,15 +84,15 @@ export default function GalleryPage() {
       </section>
 
       {/* Gallery Grid */}
-      <section className="py-20 px-4 bg-[#FAF4E8]">
+      <section className="py-20 md:py-28 px-4 md:px-6 bg-[#FAF4E8]">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {galleryImages.map((item, index) => (
               <div
                 key={index}
-                className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
                 style={{
-                  aspectRatio: '3/2',
+                  aspectRatio: '4/3',
                   position: 'relative',
                 }}
               >
@@ -104,6 +126,8 @@ export default function GalleryPage() {
                     alt="Gallery image"
                     fill
                     className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading={index > 3 ? 'lazy' : 'eager'}
                   />
                 )}
               </div>

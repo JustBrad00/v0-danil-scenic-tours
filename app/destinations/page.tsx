@@ -10,17 +10,18 @@ import AccessibilityToolbar from '@/components/accessibility-toolbar'
 import { ArrowRight } from 'lucide-react'
 
 const heroSlideImages = [
-  '/images/impala-herd.webp',
-  '/images/leopard-cub.webp',
-  '/images/crowned-crane.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2816%29-okv68gOhxJpXw4n1wmi6LzVWsS5NI3.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2812%29-s02sGMy6RmxVwGRkXsuExT87bOTlVI.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2813%29-dvsdfGxqdqYzb94D6e93B8K10dhmKW.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2814%29-PPbHtHwWOiOCF897LhCVKG6lE946GY.webp',
 ]
 
 const destinations = [
   {
     name: 'Maasai Mara National Reserve',
     description: 'Kenya\'s most iconic reserve. Home to the Big Five, big cats, and the annual Great Wildebeest Migration (July–October).',
-    image: '[Photo: Maasai Mara savannah at golden hour — wide open plains, acacia trees, warm light]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2816%29-okv68gOhxJpXw4n1wmi6LzVWsS5NI3.webp',
+    isPlaceholder: false,
   },
   {
     name: 'Amboseli National Park',
@@ -31,38 +32,38 @@ const destinations = [
   {
     name: 'Tsavo East & West National Parks',
     description: 'Kenya\'s largest wilderness. Dramatic landscapes, red-dusted elephants, and diverse wildlife.',
-    image: '[Photo: Leopard resting in tree, Tsavo National Park]',
-    isPlaceholder: true,
+    image: '/images/cheetah-resting.webp',
+    isPlaceholder: false,
   },
   {
     name: 'Lake Nakuru National Park',
     description: 'Rift Valley gem renowned for its flamingo colonies, rhinos, and leopards.',
-    image: '[Photo: Flamingos in flight over Lake Nakuru, pink sky reflection]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2812%29-s02sGMy6RmxVwGRkXsuExT87bOTlVI.webp',
+    isPlaceholder: false,
   },
   {
     name: 'Lake Bogoria National Reserve',
     description: 'Hot springs, geysers, and vast flamingo colonies on a striking soda lake.',
-    image: '[Photo: Lake Bogoria hot springs and flamingo colony]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2815%29-3ELJ3hQTT33H8nK1hqEBM53zsX5JEk.webp',
+    isPlaceholder: false,
   },
   {
     name: 'Aberdare National Park',
     description: 'Dense highland forests with waterfalls, mountain streams, and dense vegetation.',
-    image: '[Photo: Aberdare National Park highland waterfalls and forest]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2817%29-Cqk060woGnPsSL466intzq9kOsG3WA.webp',
+    isPlaceholder: false,
   },
   {
     name: 'Mt. Kenya',
     description: 'Kenya\'s second-highest mountain. Dramatic clouds, verdant slopes, and alpine trails.',
-    image: '[Photo: Mt. Kenya highland peak — dramatic clouds, greenery]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2814%29-PPbHtHwWOiOCF897LhCVKG6lE946GY.webp',
+    isPlaceholder: false,
   },
   {
     name: 'Meru National Park',
     description: 'Remote wilderness featuring the Big Five, dramatic rocky outcrops, and pristine landscapes.',
-    image: '[Photo: Meru National Park remote wilderness at dusk]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2818%29-1SnJ32U0g0LQrcsevyrXtdAYw4riyf.webp',
+    isPlaceholder: false,
   },
   {
     name: 'Samburu National Reserve',
@@ -73,8 +74,8 @@ const destinations = [
   {
     name: 'Diani Beach',
     description: 'Pristine white sand coastline along the Indian Ocean. Perfect for snorkelling, diving, and relaxation.',
-    image: '[Photo: Diani Beach — white sand, turquoise Indian Ocean, palm trees]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2813%29-dvsdfGxqdqYzb94D6e93B8K10dhmKW.webp',
+    isPlaceholder: false,
   },
 ]
 
@@ -93,7 +94,7 @@ export default function DestinationsPage() {
       <Navbar />
       
       {/* Hero with Slideshow */}
-      <section className="relative h-96 flex flex-col items-center justify-center pt-20">
+      <section className="relative h-[600px] md:h-screen flex flex-col items-center justify-center pt-20">
         <div className="absolute inset-0 z-0">
           {heroSlideImages.map((image, index) => (
             <div
@@ -131,13 +132,13 @@ export default function DestinationsPage() {
       </section>
 
       {/* Destination Cards */}
-      <section className="py-20 px-4 bg-[#FAF4E8]">
+      <section className="py-20 md:py-28 px-4 md:px-6 bg-[#FAF4E8]">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {destinations.map((dest, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300"
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300"
               >
                 {/* Image */}
                 {dest.isPlaceholder ? (
@@ -147,7 +148,7 @@ export default function DestinationsPage() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      aspectRatio: '3/2',
+                      aspectRatio: '4/3',
                       fontFamily: 'Inter, sans-serif',
                       fontSize: '13px',
                       fontStyle: 'italic',
@@ -159,22 +160,23 @@ export default function DestinationsPage() {
                     {dest.image}
                   </div>
                 ) : (
-                  <div className="relative w-full" style={{ aspectRatio: '3/2' }}>
+                  <div className="relative w-full" style={{ aspectRatio: '4/3' }}>
                     <Image
                       src={dest.image}
                       alt={dest.name}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   </div>
                 )}
 
                 {/* Content */}
-                <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-playfair text-[#2A4A35]">
+                <div className="p-6 md:p-8 space-y-4">
+                  <h3 className="text-xl md:text-2xl font-playfair text-[#2A4A35]">
                     {dest.name}
                   </h3>
-                  <p className="text-[#1C1208] font-inter text-sm leading-relaxed">
+                  <p className="text-[#1C1208] font-inter text-sm md:text-base leading-relaxed">
                     {dest.description}
                   </p>
                   <Link

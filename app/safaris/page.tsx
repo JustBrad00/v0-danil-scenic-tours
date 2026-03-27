@@ -1,5 +1,6 @@
 'use client'
 
+// Optimized Safari Experiences Page with Dynamic Image Slideshow - v2
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,9 +11,10 @@ import AccessibilityToolbar from '@/components/accessibility-toolbar'
 import { ArrowRight } from 'lucide-react'
 
 const heroSlideImages = [
-  '/images/elephant-kilimanjaro.webp',
-  '/images/amboseli-elephants.webp',
-  '/images/cheetah-resting.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2816%29-okv68gOhxJpXw4n1wmi6LzVWsS5NI3.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2812%29-s02sGMy6RmxVwGRkXsuExT87bOTlVI.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2813%29-dvsdfGxqdqYzb94D6e93B8K10dhmKW.webp',
+  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp',
 ]
 
 const services = [
@@ -20,7 +22,7 @@ const services = [
     title: 'Safari Tours',
     tag: 'Safari Tours',
     description: 'Guided game drives through Kenya\'s greatest national parks in our 4x4 pop-up roof jeeps. Witness the Big Five in their natural habitat.',
-    details: 'Parks: Maasai Mara · Amboseli · Tsavo East & West · Lake Nakuru · Lake Bogoria · Aberdare · Mt. Kenya · Meru · Samburu\nAvailable as: Private or Group | From $128/person/day (excl. international flights)',
+    details: 'Parks: Maasai Mara · Amboseli · Tsavo East & West · Lake Nakuru · Lake Bogoria · Aberdare · Mt. Kenya · Meru · Samburu\nAvailable as: Private or Group',
     image: '/images/elephant-kilimanjaro.webp',
     isPlaceholder: false,
   },
@@ -37,8 +39,8 @@ const services = [
     tag: 'Adventure',
     description: 'For thrill-seekers: hiking, biking, and hot air ballooning across Kenya\'s most spectacular terrain.',
     details: 'Available as: Private or Group',
-    image: '[Photo: Hot air balloon at sunrise over Maasai Mara, golden mist below]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp',
+    isPlaceholder: false,
   },
   {
     title: 'Beach Escapes',
@@ -58,9 +60,11 @@ const services = [
   },
 ]
 
-export default function SafarisPage() {
-  const [selectedFilter, setSelectedFilter] = useState('All')
+const filters = ['All', 'Safari Tours', 'Cultural', 'Adventure', 'Beach']
+
+const SafarisPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [selectedFilter, setSelectedFilter] = useState('All')
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,18 +73,16 @@ export default function SafarisPage() {
     return () => clearInterval(interval)
   }, [])
 
-  const filters = ['All', 'Safari Tours', 'Cultural', 'Adventure', 'Beach']
-
   const filteredServices = selectedFilter === 'All'
     ? services
-    : services.filter((s) => s.tag === selectedFilter)
+    : services.filter((service) => service.tag === selectedFilter)
 
   return (
     <main className="min-h-screen bg-[#FAF4E8]">
       <Navbar />
       
       {/* Hero with Slideshow */}
-      <section className="relative h-96 flex flex-col items-center justify-center pt-20">
+      <section className="relative h-[600px] md:h-screen flex flex-col items-center justify-center pt-20">
         <div className="absolute inset-0 z-0">
           {heroSlideImages.map((image, index) => (
             <div
@@ -92,10 +94,11 @@ export default function SafarisPage() {
             >
               <Image
                 src={image}
-                alt={`Safari experiences slide ${index + 1}`}
+                alt={`Kenya safaris slideshow ${index + 1}`}
                 fill
                 className="object-cover"
                 priority={index === 0}
+                sizes="100vw"
               />
             </div>
           ))}
@@ -112,7 +115,7 @@ export default function SafarisPage() {
             Safari Experiences Built Around You.
           </h1>
           <p className="text-white text-lg md:text-xl max-w-2xl mx-auto" style={{ opacity: 0.85 }}>
-            Private & group tours across Kenya. From $128/person/day. Fully customizable.
+            Private & group tours across Kenya. Fully customizable.
           </p>
         </div>
       </section>
@@ -139,10 +142,10 @@ export default function SafarisPage() {
       </section>
 
       {/* Services */}
-      <section className="py-20 px-4 bg-[#FAF4E8]">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section className="py-20 md:py-28 px-4 md:px-6 bg-[#FAF4E8]">
+        <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
           {filteredServices.map((service, index) => (
-            <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
               {/* Image */}
               {service.isPlaceholder ? (
                 <div
@@ -169,19 +172,20 @@ export default function SafarisPage() {
                     alt={service.title}
                     fill
                     className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
               )}
 
               {/* Content */}
-              <div className="p-8 space-y-4">
-                <h2 className="text-3xl font-playfair text-[#2A4A35]">
+              <div className="p-6 md:p-10 space-y-4 md:space-y-6">
+                <h2 className="text-2xl md:text-4xl font-playfair text-[#2A4A35]">
                   {service.title}
                 </h2>
-                <p className="text-[#1C1208] font-inter leading-relaxed">
+                <p className="text-[#1C1208] font-inter leading-relaxed text-base md:text-lg">
                   {service.description}
                 </p>
-                <div className="text-sm text-[#1C1208] font-inter whitespace-pre-line opacity-90">
+                <div className="text-sm md:text-base text-[#1C1208] font-inter whitespace-pre-line opacity-90">
                   {service.details}
                 </div>
                 <Link
@@ -235,3 +239,5 @@ export default function SafarisPage() {
     </main>
   )
 }
+
+export default SafarisPage

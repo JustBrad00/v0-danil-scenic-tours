@@ -20,8 +20,8 @@ const services = [
   {
     title: 'Adventure Safaris',
     description: 'Hiking, biking, and hot air ballooning for the thrill-seeker.',
-    image: '[Photo: Hot air balloon at sunrise over Maasai Mara, golden mist below]',
-    isPlaceholder: true,
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp',
+    isPlaceholder: false,
   },
   {
     title: 'Beach Escapes',
