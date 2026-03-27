@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function StorytellingSectionHome() {
@@ -23,26 +24,20 @@ export default function StorytellingSectionHome() {
             </Link>
           </div>
 
-          {/* Placeholder Image */}
+          {/* Image */}
           <div
+            className="relative rounded-2xl overflow-hidden shadow-lg"
             style={{
-              backgroundColor: '#C4A882',
-              borderRadius: '12px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               aspectRatio: '4/3',
               width: '100%',
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '13px',
-              fontStyle: 'italic',
-              color: '#6B5240',
-              textAlign: 'center',
-              padding: '16px',
-              letterSpacing: '0.3px'
             }}
           >
-            [Photo: Tourists laughing and watching wildlife from open jeep roof]
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%2812%29-s02sGMy6RmxVwGRkXsuExT87bOTlVI.webp"
+              alt="Flamingos at Lake Nakuru"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </div>
