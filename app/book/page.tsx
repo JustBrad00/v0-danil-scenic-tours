@@ -3,10 +3,30 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CheckCircle } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import FloatingButtons from '@/components/floating-buttons'
 import AccessibilityToolbar from '@/components/accessibility-toolbar'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Spinner } from '@/components/ui/spinner'
+import { bookingFormSchema, type BookingFormData } from '@/lib/validations/booking'
 
 const heroSlideImages = [
   '/images/cheetah-resting.webp',
@@ -21,39 +41,14 @@ const heroSlideImages = [
 ]
 
 export default function BookPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    tourType: '',
-    destination: '',
-    dates: '',
-    groupSize: '',
-    message: '',
-  })
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [submittedName, setSubmittedName] = useState('')
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % heroSlideImages.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Form submitted:', formData)
-    // [PLACEHOLDER] Form submission logic would go here
-    alert('Thank you for your inquiry! We\'ll be in touch shortly.')
-    setFormData({
+  const form = useForm<BookingFormData>({
+    resolver: zodResolver(bookingFormSchema),
+    defaultValues: {
       name: '',
       email: '',
       phone: '',
@@ -62,8 +57,46 @@ export default function BookPage() {
       dates: '',
       groupSize: '',
       message: '',
-    })
+    },
+  })
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroSlideImages.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const onSubmit = async (data: BookingFormData) => {
+    setIsLoading(true)
+    
+    try {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmittedName(data.name)
+        setShowSuccessModal(true)
+        form.reset()
+      } else {
+        console.error('Booking failed:', result.message)
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
+
+  const inputClassName = "w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
+  const labelClassName = "block text-sm font-montserrat font-semibold text-[#2A4A35]"
 
   return (
     <main className="min-h-screen bg-[#FAF4E8]">
@@ -102,7 +135,7 @@ export default function BookPage() {
             Plan Your Safari
           </h1>
           <p className="text-white text-lg md:text-xl max-w-2xl mx-auto" style={{ opacity: 0.85 }}>
-            Tell us about your dream trip and let's make it happen.
+            Tell us about your dream trip and let&apos;s make it happen.
           </p>
         </div>
       </section>
@@ -110,156 +143,209 @@ export default function BookPage() {
       {/* Booking Form */}
       <section className="py-20 px-4 bg-[#FAF4E8]">
         <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-12">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Full Name *
-              </label>
-              <input
-                type="text"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {/* Name */}
+              <FormField
+                control={form.control}
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-                placeholder="Your name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Full Name *</FormLabel>
+                    <FormControl>
+                      <input
+                        {...field}
+                        type="text"
+                        className={inputClassName}
+                        placeholder="Your name"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Email Address *
-              </label>
-              <input
-                type="email"
+              {/* Email */}
+              <FormField
+                control={form.control}
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-                placeholder="your@email.com"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Email Address *</FormLabel>
+                    <FormControl>
+                      <input
+                        {...field}
+                        type="email"
+                        className={inputClassName}
+                        placeholder="your@email.com"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Phone */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Phone / WhatsApp *
-              </label>
-              <input
-                type="tel"
+              {/* Phone */}
+              <FormField
+                control={form.control}
                 name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-                placeholder="+1 (555) 123-4567"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Phone / WhatsApp *</FormLabel>
+                    <FormControl>
+                      <input
+                        {...field}
+                        type="tel"
+                        className={inputClassName}
+                        placeholder="+1 (555) 123-4567"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Tour Type */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Tour Type *
-              </label>
-              <select
+              {/* Tour Type */}
+              <FormField
+                control={form.control}
                 name="tourType"
-                value={formData.tourType}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-              >
-                <option value="">Select a tour type</option>
-                <option value="safari">Safari Tours</option>
-                <option value="cultural">Cultural Expeditions</option>
-                <option value="adventure">Adventure Safaris</option>
-                <option value="beach">Beach Escapes</option>
-                <option value="custom">Customized Safari</option>
-              </select>
-            </div>
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Tour Type *</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        className={inputClassName}
+                        disabled={isLoading}
+                      >
+                        <option value="">Select a tour type</option>
+                        <option value="safari">Safari Tours</option>
+                        <option value="cultural">Cultural Expeditions</option>
+                        <option value="adventure">Adventure Safaris</option>
+                        <option value="beach">Beach Escapes</option>
+                        <option value="custom">Customized Safari</option>
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Destination */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Preferred Destination *
-              </label>
-              <select
+              {/* Destination */}
+              <FormField
+                control={form.control}
                 name="destination"
-                value={formData.destination}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-              >
-                <option value="">Select a destination</option>
-                <option value="maasai-mara">Maasai Mara</option>
-                <option value="amboseli">Amboseli</option>
-                <option value="tsavo">Tsavo East & West</option>
-                <option value="lake-nakuru">Lake Nakuru</option>
-                <option value="lake-bogoria">Lake Bogoria</option>
-                <option value="diani">Diani Beach</option>
-                <option value="multiple">Multiple Destinations</option>
-              </select>
-            </div>
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Preferred Destination *</FormLabel>
+                    <FormControl>
+                      <select
+                        {...field}
+                        className={inputClassName}
+                        disabled={isLoading}
+                      >
+                        <option value="">Select a destination</option>
+                        <option value="maasai-mara">Maasai Mara</option>
+                        <option value="amboseli">Amboseli</option>
+                        <option value="tsavo">Tsavo East & West</option>
+                        <option value="lake-nakuru">Lake Nakuru</option>
+                        <option value="lake-bogoria">Lake Bogoria</option>
+                        <option value="diani">Diani Beach</option>
+                        <option value="multiple">Multiple Destinations</option>
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {/* Dates */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Preferred Travel Dates
-              </label>
-              <input
-                type="text"
+              {/* Dates */}
+              <FormField
+                control={form.control}
                 name="dates"
-                value={formData.dates}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-                placeholder="e.g., June 15-22, 2025 (or flexible)"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Preferred Travel Dates</FormLabel>
+                    <FormControl>
+                      <input
+                        {...field}
+                        type="text"
+                        className={inputClassName}
+                        placeholder="e.g., June 15-22, 2025 (or flexible)"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Group Size */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Group Size
-              </label>
-              <input
-                type="text"
+              {/* Group Size */}
+              <FormField
+                control={form.control}
                 name="groupSize"
-                value={formData.groupSize}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-                placeholder="Number of travelers"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Group Size</FormLabel>
+                    <FormControl>
+                      <input
+                        {...field}
+                        type="text"
+                        className={inputClassName}
+                        placeholder="Number of travelers"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Message */}
-            <div>
-              <label className="block text-sm font-montserrat font-semibold text-[#2A4A35] mb-2">
-                Additional Details
-              </label>
-              <textarea
+              {/* Message */}
+              <FormField
+                control={form.control}
                 name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={5}
-                className="w-full px-4 py-2 border border-[#D4870A] rounded-lg font-inter focus:outline-none focus:ring-2 focus:ring-[#D4870A]"
-                placeholder="Tell us about your interests, budget, accommodation preferences, or any special requests..."
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className={labelClassName}>Additional Details</FormLabel>
+                    <FormControl>
+                      <textarea
+                        {...field}
+                        rows={5}
+                        className={inputClassName}
+                        placeholder="Tell us about your interests, budget, accommodation preferences, or any special requests..."
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full py-3 bg-[#D4870A] text-[#1C1208] font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all pulse-glow"
-            >
-              Send Inquiry
-            </button>
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full py-3 bg-[#D4870A] text-[#1C1208] font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all pulse-glow disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isLoading ? (
+                  <>
+                    <Spinner className="size-5" />
+                    Sending...
+                  </>
+                ) : (
+                  'Send Inquiry'
+                )}
+              </button>
 
-            <p className="text-xs text-[#1C1208] opacity-75 font-inter text-center">
-              We'll review your inquiry and respond within 24 hours via email or WhatsApp.
-            </p>
-          </form>
+              <p className="text-xs text-[#1C1208] opacity-75 font-inter text-center">
+                We&apos;ll review your inquiry and respond within 24 hours via email or WhatsApp.
+              </p>
+            </form>
+          </Form>
 
           {/* Alternative Contact */}
           <div className="mt-12 pt-8 border-t border-[#D4870A]">
@@ -283,6 +369,31 @@ export default function BookPage() {
           </div>
         </div>
       </section>
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="bg-white border-[#D4870A]">
+          <DialogHeader className="text-center items-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#2A4A35]/10">
+              <CheckCircle className="h-10 w-10 text-[#2A4A35]" />
+            </div>
+            <DialogTitle className="text-2xl font-playfair text-[#2A4A35]">
+              Success!
+            </DialogTitle>
+            <DialogDescription className="text-[#1C1208] font-inter text-base pt-2">
+              Thank you{submittedName ? `, ${submittedName}` : ''}! Your booking inquiry has been received. Our team will contact you within 24 hours via email or WhatsApp to discuss your dream safari.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center pt-4">
+            <button
+              onClick={() => setShowSuccessModal(false)}
+              className="px-8 py-2 bg-[#D4870A] text-[#1C1208] font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all"
+            >
+              Continue Exploring
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
       <FloatingButtons />
