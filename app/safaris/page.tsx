@@ -17,89 +17,48 @@ const heroSlideImages = [
   'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp',
 ]
 
-const safariPackages = [
+const services = [
   {
-    title: 'Amboseli Elephant Watching',
+    title: 'Safari Tours',
     tag: 'Safari Tours',
-    duration: '4 Days',
-    description: 'Witness majestic elephants against the backdrop of Mount Kilimanjaro in Amboseli National Park.',
-    price: 'Starting from $706 pp',
-    image: '/images/amboseli-elephants.webp',
-    isPlaceholder: false,
-  },
-  {
-    title: 'Masai Mara Safari',
-    tag: 'Safari Tours',
-    duration: '4 Days',
-    description: 'Experience the world-famous Masai Mara, home to the Big Five and the Great Migration.',
-    price: 'Starting from $1,599 pp',
+    description: 'Guided game drives through Kenya\'s greatest national parks in our 4x4 pop-up roof jeeps. Witness the Big Five in their natural habitat.',
+    details: 'Parks: Maasai Mara · Amboseli · Tsavo East & West · Lake Nakuru · Lake Bogoria · Aberdare · Mt. Kenya · Meru · Samburu\nAvailable as: Private or Group',
     image: '/images/elephant-kilimanjaro.webp',
     isPlaceholder: false,
   },
   {
-    title: 'Kenyan Coastal Retreat',
-    tag: 'Beach',
-    duration: '5 Days',
-    description: 'Unwind on the pristine shores of Kenya\'s Indian Ocean coast — Diani, Watamu, or Malindi.',
-    price: 'Starting from $1,799 pp',
-    image: '/images/beach-diving.webp',
-    isPlaceholder: false,
-  },
-  {
-    title: 'Adventure Safari - Great Rift Valley',
-    tag: 'Adventure',
-    duration: '6 Days',
-    description: 'For thrill-seekers: hiking, biking, and hot air ballooning across Kenya\'s spectacular Rift Valley terrain.',
-    price: 'Starting from $1,899 pp',
-    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp',
-    isPlaceholder: false,
-  },
-  {
-    title: 'Big Five Special',
-    tag: 'Safari Tours',
-    duration: '8 Days',
-    description: 'The ultimate Big Five experience across Kenya\'s premier national parks and reserves.',
-    price: 'Starting from $2,035 pp',
-    image: '/images/leopard-cub.webp',
-    isPlaceholder: false,
-  },
-  {
-    title: 'Cultural Exploration in Samburu',
+    title: 'Cultural Expeditions',
     tag: 'Cultural',
-    duration: '7 Days',
-    description: 'Immerse yourself in Kenya\'s vibrant traditions. Meet local communities, learn their customs, and savour authentic cuisine.',
-    price: 'Starting from $2,099 pp',
+    description: 'Immerse yourself in Kenya\'s vibrant traditions and daily life. Meet local communities, learn their customs, and savour authentic cuisine — including Kalenjin mursik and Gikuyu githeri.',
+    details: 'Available as: Private or Group',
     image: '/images/cultural-gathering.webp',
     isPlaceholder: false,
   },
   {
-    title: 'Southern Parks & Coast',
-    tag: 'Safari Tours',
-    duration: '10 Days',
-    description: 'Explore Tsavo, Amboseli, and the stunning Kenyan coast in one comprehensive journey.',
-    price: 'Starting from $2,203 pp',
-    image: '/images/cheetah-resting.webp',
+    title: 'Adventure Safaris',
+    tag: 'Adventure',
+    description: 'For thrill-seekers: hiking, biking, and hot air ballooning across Kenya\'s most spectacular terrain.',
+    details: 'Available as: Private or Group',
+    image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp',
     isPlaceholder: false,
   },
   {
-    title: 'The Grand Safari',
-    tag: 'Safari Tours',
-    duration: '14 Days',
-    description: 'The ultimate Kenya experience — wildlife, culture, adventure, and relaxation all in one epic journey.',
-    price: 'Starting from $3,087 pp',
+    title: 'Beach Escapes',
+    tag: 'Beach',
+    description: 'Unwind on the pristine shores of Kenya\'s Indian Ocean coast — Diani, Watamu, or Malindi. Relax in luxury beach resorts and explore marine life through snorkelling and diving.',
+    details: 'Available as: Private or customized',
+    image: '/images/beach-diving.webp',
+    isPlaceholder: false,
+  },
+  {
+    title: 'Customized Safaris',
+    tag: 'All',
+    description: 'Fully tailor-made itineraries built around your interests, group size, timeline, and budget — whether you\'re travelling solo, as a family, with friends, or on honeymoon.',
+    details: 'Available as: Fully private and personalized',
     image: '/images/zebras-savanna.webp',
     isPlaceholder: false,
   },
 ]
-
-const customSafari = {
-  title: 'Custom Safari Adventure',
-  tag: 'All',
-  description: 'Fully tailor-made itineraries built around your interests, group size, timeline, and budget — whether you\'re travelling solo, as a family, with friends, or on honeymoon.',
-  price: 'Bespoke Pricing',
-  image: '/images/impala-herd.webp',
-  isPlaceholder: false,
-}
 
 const filters = ['All', 'Safari Tours', 'Cultural', 'Adventure', 'Beach']
 
@@ -114,9 +73,9 @@ const SafarisPage = () => {
     return () => clearInterval(interval)
   }, [])
 
-  const filteredPackages = selectedFilter === 'All'
-    ? safariPackages
-    : safariPackages.filter((pkg) => pkg.tag === selectedFilter)
+  const filteredServices = selectedFilter === 'All'
+    ? services
+    : services.filter((service) => service.tag === selectedFilter)
 
   return (
     <main className="min-h-screen bg-[#FAF4E8]">
@@ -182,111 +141,77 @@ const SafarisPage = () => {
         </div>
       </section>
 
-      {/* Safari Packages */}
+      {/* Services */}
       <section className="py-20 md:py-28 px-4 md:px-6 bg-[#FAF4E8]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPackages.map((pkg, index) => (
-              <article 
-                key={index} 
-                className="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
-                aria-label={`${pkg.title} safari package`}
-              >
-                {/* Image */}
+        <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
+          {filteredServices.map((service, index) => (
+            <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              {/* Image */}
+              {service.isPlaceholder ? (
+                <div
+                  style={{
+                    backgroundColor: '#C4A882',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    aspectRatio: '4/3',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '13px',
+                    fontStyle: 'italic',
+                    color: '#6B5240',
+                    textAlign: 'center',
+                    padding: '16px',
+                  }}
+                >
+                  {service.image}
+                </div>
+              ) : (
                 <div className="relative w-full" style={{ aspectRatio: '4/3' }}>
                   <Image
-                    src={pkg.image}
-                    alt={pkg.title}
+                    src={service.image}
+                    alt={service.title}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute top-4 left-4 bg-[#F97316] text-white text-xs font-montserrat font-semibold px-3 py-1 rounded-full">
-                    {pkg.duration}
-                  </div>
                 </div>
+              )}
 
-                {/* Content */}
-                <div className="p-6 space-y-4">
-                  <h2 className="text-xl font-playfair text-[#1A1F2C]">
-                    {pkg.title}
-                  </h2>
-                  <p className="text-[#1A1F2C] font-inter leading-relaxed text-sm opacity-80">
-                    {pkg.description}
-                  </p>
-                  
-                  {/* Price */}
-                  <p className="text-[#F97316] font-montserrat font-bold text-lg">
-                    {pkg.price}
-                  </p>
-                  
-                  <Link
-                    href="/book"
-                    className="inline-flex items-center gap-2 text-[#F97316] font-montserrat font-semibold hover:gap-3 transition-all"
-                    aria-label={`Inquire about ${pkg.title}`}
-                  >
-                    Inquire Now <ArrowRight size={16} aria-hidden="true" />
-                  </Link>
+              {/* Content */}
+              <div className="p-6 md:p-10 space-y-4 md:space-y-6">
+                <h2 className="text-2xl md:text-4xl font-playfair text-[#2A4A35]">
+                  {service.title}
+                </h2>
+                <p className="text-[#1C1208] font-inter leading-relaxed text-base md:text-lg">
+                  {service.description}
+                </p>
+                <div className="text-sm md:text-base text-[#1C1208] font-inter whitespace-pre-line opacity-90">
+                  {service.details}
                 </div>
-              </article>
-            ))}
-          </div>
-
-          {/* Custom Safari - Final CTA Card */}
-          {selectedFilter === 'All' && (
-            <div className="mt-16">
-              <article 
-                className="bg-[#1A1F2C] rounded-[2rem] overflow-hidden shadow-xl"
-                aria-label="Custom Safari Adventure - Request a personalized quote"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 items-center">
-                  <div className="relative w-full" style={{ aspectRatio: '4/3' }}>
-                    <Image
-                      src={customSafari.image}
-                      alt={customSafari.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
-                  <div className="p-8 md:p-12 space-y-6">
-                    <h2 className="text-3xl md:text-4xl font-playfair text-white">
-                      {customSafari.title}
-                    </h2>
-                    <p className="text-white/90 font-inter leading-relaxed text-lg">
-                      {customSafari.description}
-                    </p>
-                    <p className="text-[#F97316] font-montserrat font-bold text-xl">
-                      {customSafari.price}
-                    </p>
-                    <Link
-                      href="/book"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#F97316] text-white font-montserrat font-bold rounded-lg hover:bg-[#EA580C] hover:gap-3 transition-all"
-                      aria-label="Request a custom safari quote"
-                    >
-                      Request Quote <ArrowRight size={18} aria-hidden="true" />
-                    </Link>
-                  </div>
-                </div>
-              </article>
+                <Link
+                  href="/book"
+                  className="inline-flex items-center gap-2 text-[#D4870A] font-montserrat font-semibold hover:gap-3 transition-all"
+                >
+                  Inquire About This {service.tag === 'All' ? 'Safari' : service.tag} <ArrowRight size={16} />
+                </Link>
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </section>
 
       {/* Pricing Transparency */}
       <section className="py-16 px-4 bg-[#F2E8D5]">
         <div className="max-w-3xl mx-auto text-center space-y-6">
-          <h2 className="text-4xl font-playfair text-[#1A1F2C]">
+          <h2 className="text-4xl font-playfair text-[#2A4A35]">
             Honest Pricing. No Surprises.
           </h2>
-          <p className="text-lg text-[#1A1F2C] font-inter leading-relaxed">
-            All prices shown are per person and exclude international flights. Your final quote depends on the park, duration, accommodation level, and group size. Contact us for a custom quote — it&apos;s free and there&apos;s no commitment.
+          <p className="text-lg text-[#1C1208] font-inter leading-relaxed">
+            Our tours range from $128 to $420 per person per day (USD), excluding international flights. Your final quote depends on the park, duration, accommodation level, and group size. Contact us for a custom quote — it's free and there's no commitment.
           </p>
           <Link
             href="/book"
-            className="inline-block px-8 py-3 bg-[#F97316] text-white font-montserrat font-semibold rounded-lg hover:bg-[#EA580C] hover:shadow-lg transition-all"
-            aria-label="Request a free safari quote"
+            className="inline-block px-8 py-3 bg-[#D4870A] text-[#1C1208] font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all pulse-glow"
           >
             Request a Free Quote
           </Link>

@@ -159,7 +159,6 @@ export default function BookPage() {
                         className={inputClassName}
                         placeholder="Your name"
                         disabled={isLoading}
-                        aria-label="Enter your full name"
                       />
                     </FormControl>
                     <FormMessage />
@@ -181,7 +180,6 @@ export default function BookPage() {
                         className={inputClassName}
                         placeholder="your@email.com"
                         disabled={isLoading}
-                        aria-label="Enter your email address"
                       />
                     </FormControl>
                     <FormMessage />
@@ -203,7 +201,6 @@ export default function BookPage() {
                         className={inputClassName}
                         placeholder="+1 (555) 123-4567"
                         disabled={isLoading}
-                        aria-label="Enter your phone number or WhatsApp"
                       />
                     </FormControl>
                     <FormMessage />
@@ -223,18 +220,13 @@ export default function BookPage() {
                         {...field}
                         className={inputClassName}
                         disabled={isLoading}
-                        aria-label="Select tour type"
                       >
                         <option value="">Select a tour type</option>
-                        <option value="amboseli">Amboseli Elephant Watching (4 Days) - from $706 pp</option>
-                        <option value="masai-mara">Masai Mara Safari (4 Days) - from $1,599 pp</option>
-                        <option value="coastal">Kenyan Coastal Retreat (5 Days) - from $1,799 pp</option>
-                        <option value="adventure">Adventure Safari - Great Rift Valley (6 Days) - from $1,899 pp</option>
-                        <option value="big-five">Big Five Special (8 Days) - from $2,035 pp</option>
-                        <option value="cultural">Cultural Exploration in Samburu (7 Days) - from $2,099 pp</option>
-                        <option value="southern">Southern Parks & Coast (10 Days) - from $2,203 pp</option>
-                        <option value="grand">The Grand Safari (14 Days) - from $3,087 pp</option>
-                        <option value="custom">Custom Safari Adventure - Bespoke Pricing</option>
+                        <option value="safari">Safari Tours</option>
+                        <option value="cultural">Cultural Expeditions</option>
+                        <option value="adventure">Adventure Safaris</option>
+                        <option value="beach">Beach Escapes</option>
+                        <option value="custom">Customized Safari</option>
                       </select>
                     </FormControl>
                     <FormMessage />
@@ -254,7 +246,6 @@ export default function BookPage() {
                         {...field}
                         className={inputClassName}
                         disabled={isLoading}
-                        aria-label="Select preferred destination"
                       >
                         <option value="">Select a destination</option>
                         <option value="maasai-mara">Maasai Mara</option>
@@ -285,7 +276,6 @@ export default function BookPage() {
                         className={inputClassName}
                         placeholder="e.g., June 15-22, 2025 (or flexible)"
                         disabled={isLoading}
-                        aria-label="Enter preferred travel dates"
                       />
                     </FormControl>
                     <FormMessage />
@@ -307,7 +297,6 @@ export default function BookPage() {
                         className={inputClassName}
                         placeholder="Number of travelers"
                         disabled={isLoading}
-                        aria-label="Enter your group size"
                       />
                     </FormControl>
                     <FormMessage />
@@ -329,7 +318,6 @@ export default function BookPage() {
                         className={inputClassName}
                         placeholder="Tell us about your interests, budget, accommodation preferences, or any special requests..."
                         disabled={isLoading}
-                        aria-label="Enter additional details about your trip"
                       />
                     </FormControl>
                     <FormMessage />
@@ -341,8 +329,7 @@ export default function BookPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 bg-[#F97316] text-white font-montserrat font-semibold rounded-lg hover:bg-[#EA580C] hover:shadow-lg transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                aria-label={isLoading ? 'Sending your inquiry' : 'Send inquiry'}
+                className="w-full py-3 bg-[#D4870A] text-[#1C1208] font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all pulse-glow disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
