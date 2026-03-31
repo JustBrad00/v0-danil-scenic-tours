@@ -25,7 +25,6 @@ const services = [
     details: 'Parks: Maasai Mara · Amboseli · Tsavo East & West · Lake Nakuru · Lake Bogoria · Aberdare · Mt. Kenya · Meru · Samburu\nAvailable as: Private or Group',
     image: '/images/elephant-kilimanjaro.webp',
     isPlaceholder: false,
-    price: 'Starting from $150/person/day',
   },
   {
     title: 'Cultural Expeditions',
@@ -34,7 +33,6 @@ const services = [
     details: 'Available as: Private or Group',
     image: '/images/cultural-gathering.webp',
     isPlaceholder: false,
-    price: 'Starting from $128/person/day',
   },
   {
     title: 'Adventure Safaris',
@@ -43,7 +41,6 @@ const services = [
     details: 'Available as: Private or Group',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pexels-loren-nelson-iii-393937649-14779646-JNYFWwU42lFLNOQPguKoXD6t0DPdE7.webp',
     isPlaceholder: false,
-    price: 'Starting from $180/person/day',
   },
   {
     title: 'Beach Escapes',
@@ -52,18 +49,16 @@ const services = [
     details: 'Available as: Private or customized',
     image: '/images/beach-diving.webp',
     isPlaceholder: false,
-    price: 'Starting from $200/person/day',
+  },
+  {
+    title: 'Customized Safaris',
+    tag: 'All',
+    description: 'Fully tailor-made itineraries built around your interests, group size, timeline, and budget — whether you\'re travelling solo, as a family, with friends, or on honeymoon.',
+    details: 'Available as: Fully private and personalized',
+    image: '/images/zebras-savanna.webp',
+    isPlaceholder: false,
   },
 ]
-
-const customSafari = {
-  title: 'Custom Safari',
-  tag: 'All',
-  description: 'Fully tailor-made itineraries built around your interests, group size, timeline, and budget — whether you\'re travelling solo, as a family, with friends, or on honeymoon.',
-  details: 'Available as: Fully private and personalized',
-  image: '/images/zebras-savanna.webp',
-  isPlaceholder: false,
-}
 
 const filters = ['All', 'Safari Tours', 'Cultural', 'Adventure', 'Beach']
 
@@ -193,9 +188,6 @@ const SafarisPage = () => {
                 <div className="text-sm md:text-base text-[#1C1208] font-inter whitespace-pre-line opacity-90">
                   {service.details}
                 </div>
-                <p className="text-[#D4870A] font-montserrat font-bold text-lg">
-                  {service.price}
-                </p>
                 <Link
                   href="/book"
                   className="inline-flex items-center gap-2 text-[#D4870A] font-montserrat font-semibold hover:gap-3 transition-all"
@@ -205,40 +197,6 @@ const SafarisPage = () => {
               </div>
             </div>
           ))}
-
-          {/* Custom Safari - Final CTA Card */}
-          {(selectedFilter === 'All') && (
-            <div className="bg-[#2A4A35] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-0 items-center">
-                <div className="relative w-full" style={{ aspectRatio: '4/3' }}>
-                  <Image
-                    src={customSafari.image}
-                    alt={customSafari.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <div className="p-8 md:p-12 space-y-6">
-                  <h2 className="text-3xl md:text-4xl font-playfair text-white">
-                    {customSafari.title}
-                  </h2>
-                  <p className="text-white/90 font-inter leading-relaxed text-lg">
-                    {customSafari.description}
-                  </p>
-                  <p className="text-white/80 font-inter text-sm">
-                    {customSafari.details}
-                  </p>
-                  <Link
-                    href="/book"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4870A] text-white font-montserrat font-bold rounded-lg hover:bg-[#B8740A] hover:gap-3 transition-all"
-                  >
-                    Get Your Free Quote <ArrowRight size={18} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
