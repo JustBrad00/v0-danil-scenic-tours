@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Car } from 'lucide-react'
 
 const services = [
   {
@@ -71,6 +71,7 @@ export default function ServicesGrid() {
                     src={service.image}
                     alt={service.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover"
                   />
                 </div>
@@ -93,6 +94,91 @@ export default function ServicesGrid() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Travel & Transport Solutions Section */}
+        <h2 className="text-4xl md:text-5xl font-playfair text-[#2A4A35] text-center mt-24 mb-16">
+          Travel & Transport Solutions
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Custom Safaris Card */}
+          <div
+            className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+            aria-label="Custom Safaris service"
+          >
+            {/* Maasai Mara Map/Itinerary Placeholder */}
+            <div
+              style={{
+                backgroundColor: '#C4A882',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                aspectRatio: '4/3',
+                width: '100%',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '13px',
+                fontStyle: 'italic',
+                color: '#6B5240',
+                textAlign: 'center',
+                padding: '16px',
+              }}
+            >
+              Maasai Mara Map & Itinerary
+            </div>
+
+            {/* Content */}
+            <div className="p-8 space-y-4">
+              <h3 className="text-2xl font-playfair text-[#2A4A35]">
+                Custom Safaris
+              </h3>
+              <p className="text-[#1C1208] font-inter leading-relaxed">
+                Tailor-made itineraries designed specifically for your interests, budget, and pace. From private family getaways to specialized photography expeditions.
+              </p>
+              <button
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#F97316] text-white font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all hover:gap-3"
+                aria-label="Request a Custom Proposal for safaris"
+              >
+                Request a Custom Proposal <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+
+          {/* Professional Car Hire Card */}
+          <div
+            className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+            aria-label="Professional Car Hire service"
+          >
+            {/* Car Icon Background */}
+            <div
+              style={{
+                backgroundColor: '#F97316',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                aspectRatio: '4/3',
+                width: '100%',
+              }}
+            >
+              <Car size={80} className="text-white opacity-80" />
+            </div>
+
+            {/* Content */}
+            <div className="p-8 space-y-4">
+              <h3 className="text-2xl font-playfair text-[#2A4A35]">
+                Professional Car Hire
+              </h3>
+              <p className="text-[#1C1208] font-inter leading-relaxed">
+                Explore Kenya at your own pace with our fleet of reliable 4x4 Land Cruisers and Safari Vans. Available with professional drivers or as self-drive options.
+              </p>
+              <button
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#F97316] text-white font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all hover:gap-3"
+                aria-label="View Fleet and Rates for car hire"
+              >
+                View Fleet & Rates <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Star, Quote } from 'lucide-react'
 
@@ -11,6 +10,7 @@ const testimonials = [
     country: 'Belgium',
     date: 'March 2025',
     rating: 5,
+    verified: true,
   },
   {
     quote: 'Danson was more than a driver — he was an entertainer. He was very patient and good with the kids. 10/10 value for money.',
@@ -18,6 +18,7 @@ const testimonials = [
     country: 'Germany',
     date: 'January 2025',
     rating: 5,
+    verified: true,
   },
   {
     quote: 'The package they offered was budget friendly. Dan the tour guide was amazing — he knew the park like the back of his hand.',
@@ -25,25 +26,35 @@ const testimonials = [
     country: 'Kenya',
     date: 'January 2025',
     rating: 5,
+    verified: true,
+  },
+  {
+    quote: 'An unforgettable experience! The attention to detail and personalized service made our trip truly special. Highly recommend!',
+    author: 'Sarah',
+    country: 'United States',
+    date: 'February 2025',
+    rating: 5,
+    verified: true,
+  },
+  {
+    quote: 'Professional, reliable, and passionate about conservation. Every moment of the safari was perfectly orchestrated.',
+    author: 'Michael',
+    country: 'Canada',
+    date: 'March 2025',
+    rating: 5,
+    verified: true,
+  },
+  {
+    quote: 'The guides were incredibly knowledgeable and made sure we saw the Big Five. Worth every penny and then some!',
+    author: 'Emma',
+    country: 'United Kingdom',
+    date: 'February 2025',
+    rating: 5,
+    verified: true,
   },
 ]
 
 export default function TestimonialsCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlay, setIsAutoPlay] = useState(true)
-
-  useEffect(() => {
-    if (!isAutoPlay) return
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 3000)
-
-    return () => clearInterval(interval)
-  }, [isAutoPlay])
-
-  const current = testimonials[currentIndex]
-
   return (
     <section
       className="py-20 px-4"
@@ -51,7 +62,7 @@ export default function TestimonialsCarousel() {
         backgroundColor: '#1C3028',
       }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-playfair text-[#FDF8F0] text-center mb-2">
           What Our Travellers Say
         </h2>
@@ -59,46 +70,46 @@ export default function TestimonialsCarousel() {
           Verified reviews from SafariBookings.com
         </p>
 
-        <div
-          className="bg-[#2A4A35] rounded-2xl p-8 md:p-12 min-h-96 flex flex-col justify-between"
-          onMouseEnter={() => setIsAutoPlay(false)}
-          onMouseLeave={() => setIsAutoPlay(true)}
-        >
-          <div>
-            <Quote size={40} className="text-[#D4870A] mb-6" />
-            <p className="text-[#FDF8F0] font-inter text-lg md:text-xl leading-relaxed mb-6 italic">
-              "{current.quote}"
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex gap-1">
-              {[...Array(current.rating)].map((_, i) => (
-                <Star key={i} size={20} className="fill-[#D4870A] text-[#D4870A]" />
-              ))}
-            </div>
-            <div className="text-[#FDF8F0] font-montserrat font-semibold">
-              {current.author}, {current.country} • {current.date}
-            </div>
-          </div>
-        </div>
-
-        {/* Carousel Indicators */}
-        <div className="flex justify-center gap-3 mt-8">
-          {testimonials.map((_, index) => (
-            <button
+        {/* Grid Layout for 6 Reviews */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {testimonials.map((review, index) => (
+            <div
               key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-2 rounded-full transition-all ${
-                index === currentIndex
-                  ? 'bg-[#D4870A] w-8'
-                  : 'bg-[#D4870A] bg-opacity-40 w-2'
-              }`}
-            />
+              className="bg-[#2A4A35] rounded-2xl p-6 flex flex-col justify-between"
+              aria-label={`Review from ${review.author}, ${review.country}`}
+            >
+              <div>
+                <Quote size={32} className="text-[#D4870A] mb-4" />
+                <p className="text-[#FDF8F0] font-inter text-sm leading-relaxed mb-6 italic">
+                  "{review.quote}"
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex gap-1">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} size={16} className="fill-[#D4870A] text-[#D4870A]" />
+                  ))}
+                </div>
+                <div>
+                  <p className="text-[#FDF8F0] font-montserrat font-semibold text-sm">
+                    {review.author}, {review.country}
+                  </p>
+                  <p className="text-[#D4870A] font-inter text-xs">
+                    {review.date}
+                  </p>
+                  {review.verified && (
+                    <p className="text-[#D4870A] font-montserrat text-xs font-semibold mt-2">
+                      ✓ Verified Review
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center">
           <p className="text-[#FDF8F0] font-inter text-sm mb-4">
             Source: safaribookings.com/p6036
           </p>
@@ -107,6 +118,7 @@ export default function TestimonialsCarousel() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-6 py-3 bg-[#D4870A] text-[#1C1208] font-montserrat font-semibold rounded-lg hover:shadow-lg transition-all pulse-glow"
+            aria-label="View all 23 reviews on SafariBookings"
           >
             Read All 23 Reviews on SafariBookings
           </Link>

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, Mail } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -63,10 +63,25 @@ export default function Footer() {
                 <p>P.O. Box 49377-00100, Nairobi, Kenya</p>
               </div>
               <div>
-                <p className="opacity-75">Website</p>
-                <Link href="https://danilscenictours.co.ke" target="_blank" className="hover:text-[#D4870A] transition-colors">
-                  danilscenictours.co.ke
-                </Link>
+                <p className="opacity-75 mb-2">Email Us</p>
+                <div className="space-y-1">
+                  <Link 
+                    href="mailto:danilscenic@gmail.com" 
+                    className="flex items-center gap-2 hover:text-[#D4870A] transition-colors"
+                    aria-label="Email danilscenic@gmail.com"
+                  >
+                    <Mail size={16} />
+                    danilscenic@gmail.com
+                  </Link>
+                  <Link 
+                    href="mailto:safari@danilscenictours.co.ke" 
+                    className="flex items-center gap-2 hover:text-[#D4870A] transition-colors"
+                    aria-label="Email safari@danilscenictours.co.ke"
+                  >
+                    <Mail size={16} />
+                    safari@danilscenictours.co.ke
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
