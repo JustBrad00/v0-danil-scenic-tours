@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import ServiceModal from './service-modal'
 
 const services = [
   {
@@ -44,6 +45,18 @@ const services = [
 ]
 
 export default function ServicesGrid() {
+  const [selectedService, setSelectedService] = useState<{
+    title: string
+    description: string
+  } | null>(null)
+
+  const handleLearnMore = (service: typeof services[0]) => {
+    setSelectedService({
+      title: service.title,
+      description: service.description,
+    })
+  }
+
   return (
     <section className="py-20 px-4 bg-[#F2E8D5]">
       <div className="max-w-7xl mx-auto">
@@ -89,25 +102,32 @@ export default function ServicesGrid() {
                 </div>
               )}
 
-              {/* Content */}
+              {/* Content - Only Title and Button */}
               <div className="p-8 space-y-4">
                 <h3 className="text-2xl font-playfair text-[#2A4A35]">
                   {service.title}
                 </h3>
-                <p className="text-[#1C1208] font-inter leading-relaxed">
-                  {service.description}
-                </p>
-                <Link
-                  href="/safaris"
+                <button
+                  onClick={() => handleLearnMore(service)}
                   className="inline-flex items-center gap-2 text-[#D4870A] font-montserrat font-semibold hover:gap-3 transition-all"
                 >
                   Learn More <ArrowRight size={16} />
-                </Link>
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Service Modal */}
+      {selectedService && (
+        <ServiceModal
+          isOpen={!!selectedService}
+          title={selectedService.title}
+          description={selectedService.description}
+          onClose={() => setSelectedService(null)}
+        />
+      )}
     </section>
   )
 }

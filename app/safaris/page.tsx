@@ -190,10 +190,10 @@ const SafarisPage = () => {
                   {service.details}
                 </div>
                 <Link
-                  href="/book"
+                  href="/destinations"
                   className="inline-flex items-center gap-2 text-[#D4870A] font-montserrat font-semibold hover:gap-3 transition-all"
                 >
-                  Inquire About This {service.tag === 'All' ? 'Safari' : service.tag} <ArrowRight size={16} />
+                  Explore Destinations <ArrowRight size={16} />
                 </Link>
               </div>
             </div>

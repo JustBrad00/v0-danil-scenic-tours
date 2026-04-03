@@ -118,7 +118,7 @@ export default function DestinationsPage() {
                     href="/book"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4870A] text-white font-montserrat font-semibold text-sm rounded-lg hover:shadow-lg transition-all hover:gap-3"
                   >
-                    Book This Destination <ArrowRight size={16} />
+                    Book This Safari <ArrowRight size={16} />
                   </Link>
                 </div>
               </div>
